@@ -31,5 +31,16 @@
         "response_body": {
             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9"
         }
+    },
+    {
+        "method": "GET",
+        "path": "/user/<name>",
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "response_body": {
+            "message": "hello world"
+        }
     }
 ]

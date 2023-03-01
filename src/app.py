@@ -53,7 +53,7 @@ def validate_environment_variables():
 
 
 def create_endpoint(path, method, response_body, status_code=200, headers=None):
-    def endpoint():
+    def endpoint(*args, **kwargs):
         return jsonify(response_body), status_code, headers
     endpoint.__name__ = f"{method}_{path.replace('/', '_')}"
     return endpoint
