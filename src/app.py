@@ -2,6 +2,7 @@ import json
 import os
 import sys
 from flask import Flask, jsonify
+from template_renderer import PathParameterRenderer
 
 
 class CouldNotFindEnvironmentVariable(Exception):
@@ -54,7 +55,17 @@ def validate_environment_variables():
 
 def create_endpoint(path, method, response_body, status_code=200, headers=None):
     def endpoint(*args, **kwargs):
-        return jsonify(response_body), status_code, headers
+        params = kwargs.copy()
+        stringify_response = json.dumps(response_body)
+        if "{{" in stringify_response and "}}" in stringify_response:
+            if len(params) > 0:
+                renderer = PathParameterRenderer(stringify_response)
+                body = renderer.render(params)
+                return jsonify(body), status_code, headers
+            else:
+                return jsonify(response_body), status_code, headers
+        else:
+            return jsonify(response_body), status_code, headers
     endpoint.__name__ = f"{method}_{path.replace('/', '_')}"
     return endpoint
 
