@@ -64,7 +64,7 @@ class ServerTest(TestCase):
             response_body = endpoint["response_body"]
             status_code = endpoint.get("status_code", 200)
             headers = endpoint.get("headers", {})
-            view_func = self.server.app.view_functions[f"{method.lower()}{path.replace('/', '_').replace('{', '').replace('}', '')}"]
+            view_func = self.server.app.view_functions[f"{method.lower()}{path.replace('/', '_').replace('<', '').replace('>', '')}"]
             with self.server.app.test_request_context(path):
                 response = view_func()
                 self.assertEqual(response[0].json, response_body)

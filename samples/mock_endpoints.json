@@ -53,5 +53,17 @@
         "response_body": {
             "message": "hello, my name is {{name}}"
         }
+    },
+    {
+        "method": "GET",
+        "path": "/search?query=python&limit=10",
+        "status_code": 200,
+        "headers": {
+            "Content-Type": "application/json"
+        },
+        "response_body": {
+            "query": "{{query}}",
+            "limit": "{{limit}}"
+        }
     }
 ]

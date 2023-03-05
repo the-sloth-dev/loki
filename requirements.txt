@@ -1,2 +1,5 @@
 Flask==2.0.2
 chevron==0.14.0
+parameterized~=0.7.4
+setuptools~=60.9.3
+requests~=2.25.1
