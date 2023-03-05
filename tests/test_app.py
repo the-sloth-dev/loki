@@ -17,7 +17,7 @@ class ServerTest(TestCase):
             },
             {
                 "method": "POST",
-                "path": "/test/{name}/{id}",
+                "path": "/test/<name>/<id>",
                 "response_body": {"message": "Hello, {{name}}! Your ID is {{id}}."}
             }
         ]
@@ -48,7 +48,7 @@ class ServerTest(TestCase):
 
     def test_create_endpoint(self):
         server = Server()
-        path = "/test/{name}"
+        path = "/test/<name>"
         endpoint = server.create_endpoint(path, "GET", {"message": "Hello, {{name}}!"})
         self.assertEqual(endpoint.__name__, "get_test_name")
         with server.app.test_request_context(path):
@@ -76,7 +76,7 @@ class ServerTest(TestCase):
         ["DELETE", "/test", "delete_test"],
         ["PATCH", "/test", "patch_test"],
         ["PUT", "/test", "put_test"],
-        ["POST", "/test/{name}/{id}", "post_test_name_id"]
+        ["POST", "/test/<name>/<id>", "post_test_name_id"]
     ])
     def test_generate_name(self, method, path, expected):
         actual = self.server.generate_name(method, path)

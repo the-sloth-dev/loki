@@ -58,7 +58,7 @@ class Server:
 
     @staticmethod
     def generate_name(method, path):
-        return f"{method.lower()}{path.replace('/', '_').replace('{', '').replace('}', '')}"
+        return f"{method.lower()}{path.replace('/', '_').replace('<', '').replace('>', '')}"
 
     def create_endpoint(self, path, method, response_body, status_code=200, headers=None):
         def endpoint(*args, **kwargs):
