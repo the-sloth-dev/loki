@@ -57,7 +57,10 @@ class Server:
             raise CouldNotFindEnvironmentVariable('MOCK_ENDPOINTS_JSON')
 
     @staticmethod
-    def create_endpoint(path, method, response_body, status_code=200, headers=None):
+    def generate_name(method, path):
+        return f"{method}{path.replace('/', '_')}"
+
+    def create_endpoint(self, path, method, response_body, status_code=200, headers=None):
         def endpoint(*args, **kwargs):
             params = kwargs.copy()
             stringify_response = json.dumps(response_body)
@@ -71,7 +74,7 @@ class Server:
             else:
                 return jsonify(response_body), status_code, headers
 
-        endpoint.__name__ = f"{method}_{path.replace('/', '_')}"
+        endpoint.__name__ = self.generate_name(method, path)
         return endpoint
 
     def register_mock_endpoints(self, mock_endpoints):
